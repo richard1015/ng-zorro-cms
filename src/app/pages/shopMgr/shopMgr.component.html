@@ -1,0 +1,50 @@
+<form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label>店铺名称</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <span nz-form-text>{{_data.ShopName}}</span>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label>店铺图片</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <img [src]="_data.ShopImg" alt="">
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>店铺地址</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="ShopAddress" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>联系电话</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="Tell" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>营业时间</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="BusinessHours" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" (click)="submit()" [nzSize]="'large'">保存</button>
+    </div>
+  </div>
+</form>

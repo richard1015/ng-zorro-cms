@@ -1,0 +1,124 @@
+<div class="components-table-demo-control-bar">
+    <form nz-form [nzLayout]="'inline'">
+      <div nz-row nz-form-item>
+        <div nz-form-control>
+          <button (click)="edit()" nz-button [nzType]="'primary'">
+            <span>新增</span>
+          </button>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Bordered</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_bordered" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Loading</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_loading" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Pagination</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_pagination" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Title</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_title" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Column Header</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_header" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Footer</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_footer" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Fixed Header</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_fixHeader" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Size</label>
+        </div>
+        <div nz-form-control>
+          <nz-radio-group [(ngModel)]="_size" [ngModelOptions]="{standalone: true}">
+            <label nz-radio-button [nzValue]="'default'">
+              <span>Default</span>
+            </label>
+            <label nz-radio-button [nzValue]="'middle'">
+              <span>Middle</span>
+            </label>
+            <label nz-radio-button [nzValue]="'small'">
+              <span>Small</span>
+            </label>
+          </nz-radio-group>
+        </div>
+      </div>
+    </form>
+  </div>
+  <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
+    <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 240 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
+      (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
+      [nzShowTitle]="_title" [nzSize]="_size">
+      <span nz-table-title>Here is title</span>
+      <ng-template #nzFixedHeader [ngIf]="_header&&!_fixHeader">
+        <thead nz-thead>
+          <tr>
+            <th nz-th>
+              <span>Id</span>
+            </th>
+            <th nz-th>
+              <span>名称</span>
+            </th>
+            <th nz-th>
+              <span>Action</span>
+            </th>
+          </tr>
+        </thead>
+      </ng-template>
+      <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor="let data of nzTable.data;let idx=index;">
+          <td nz-td>{{data.Id}}</td>
+          <td nz-td>{{data.SName}}</td>
+          <td nz-td>
+            <span>
+              <a (click)="edit(data)">修改 一 {{data.SName}}</a>
+              <span nz-table-divider></span>
+              <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
+                <a nz-popconfirm>删除</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+      <span nz-table-footer>Here is footer</span>
+    </nz-table>
+  </nz-spin>
