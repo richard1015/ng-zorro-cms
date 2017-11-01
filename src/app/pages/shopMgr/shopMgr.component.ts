@@ -12,7 +12,7 @@ export class ShopMgrComponent implements OnInit {
   constructor(private service: ShopMgrService, private fb: FormBuilder) { }
 
   _data: any = {};
-
+  file: File[];
   validateForm: FormGroup;
   ngOnInit() {
     this.validateForm = this.fb.group(new EditShopInfoParams());
@@ -31,11 +31,13 @@ export class ShopMgrComponent implements OnInit {
       }
     });
   }
-
+  fileChange($event) {
+    this.file = $event.target.files;
+  }
   submit() {
     let params = this.validateForm.value;
-    
-    this.service.editShopInfo(params).subscribe(res => {
+
+    this.service.editShopInfo(params, this.file).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
           icon: `success`,

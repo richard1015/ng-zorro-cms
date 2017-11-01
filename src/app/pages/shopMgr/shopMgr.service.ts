@@ -11,8 +11,8 @@ export class ShopMgrService {
         return this.api.Post({}, "BGetPCShopInfoList");
     }
     //修改商铺信息
-    public editShopInfo(params: EditShopInfoParams) {
-        return this.api.Post(params, "BGetPCShopInfoUp");
+    public editShopInfo(params: EditShopInfoParams, file?: File[]) {
+        return this.api.Post(params, "BGetPCShopInfoUp", file);
     }
     //获取员工列表
     public getStaffList(params: StaffListParams) {

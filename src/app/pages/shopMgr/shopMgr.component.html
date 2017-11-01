@@ -13,6 +13,7 @@
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
       <img [src]="_data.ShopImg" alt="">
+      <input id="file1" accept type="file" (change)="fileChange($event)" />
     </div>
   </div>
   <div nz-form-item nz-row>
