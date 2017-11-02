@@ -2,7 +2,7 @@
   <form nz-form [nzLayout]="'inline'">
     <div nz-row nz-form-item>
       <div nz-form-control>
-        <button (click)="edit()" nz-button [nzType]="'primary'">
+        <button (click)="add()" nz-button [nzType]="'primary'">
           <span>新增</span>
         </button>
       </div>
@@ -114,7 +114,7 @@
         <td nz-td>{{data.JName}}</td>
         <td nz-td>
           <span>
-            <a (click)="edit(data)">修改 一 {{data.SName}}</a>
+            <a [routerLink]="['edit',data.Id]">修改 一 {{data.RoleName}}</a>
             <span nz-table-divider></span>
             <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
               <a nz-popconfirm>删除</a>

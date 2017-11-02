@@ -1,10 +1,10 @@
 <form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
   <div nz-form-item nz-row>
     <div nz-form-label nz-col [nzSpan]="6">
-      <label>店铺名称</label>
+
     </div>
-    <div nz-form-control nz-col [nzSpan]="14">
-      <span nz-form-text>{{_data.ShopName}}</span>
+    <div nz-form-control nz-col [nzSpan]="5">
+      <h1>非管理员请勿使用</h1>
     </div>
   </div>
   <div nz-form-item nz-row>
@@ -12,10 +12,16 @@
       <label>店铺图片</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="5">
-      <a href="{{_data.ShopImg}}" target="_blank">
-        <img class="shopImg" [src]="_data.ShopImg" alt="">
-      </a>
       <input id="file1" accept type="file" (change)="fileChange($event)" />
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>店铺名称</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="ShopName" [nzSize]="'large'">
+      </nz-input>
     </div>
   </div>
   <div nz-form-item nz-row>
@@ -42,6 +48,33 @@
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
       <nz-input formControlName="BusinessHours" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>老板工号</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="JobNumber" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>老板名字</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="JobName" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>老板电话</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="Phone" [nzSize]="'large'">
       </nz-input>
     </div>
   </div>

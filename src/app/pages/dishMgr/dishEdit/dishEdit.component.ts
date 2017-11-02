@@ -9,6 +9,8 @@ import { LocalStorage } from '../../../SERVICE/local.storage';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Bounds, CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { DishMgrService, DishListParams, DelDishParams, UnitListParams, TypeListParams, FlavorListParams, KitchenListParams, EditDishParams } from '../dishMgr.service';
+import swal from 'sweetalert';
+
 @Component({
   selector: 'app-dishEdit',
   templateUrl: './dishEdit.component.html',
@@ -43,7 +45,6 @@ export class DishEditComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private router: Router,
     private ls: LocalStorage,
-    private message: NzMessageService,
     private service: DishMgrService) {
 
     this.name = 'ng-alain';
@@ -81,7 +82,7 @@ export class DishEditComponent implements OnInit {
     this.getKitchenList();
     this.validateForm = this.fb.group(new EditDishParams());
     let id = this.routerInfo.snapshot.params["id"];
-    if (id) {
+    if (id != "0") {
       let dishListParams: DishListParams = new DishListParams();
       dishListParams.Id = id;
       this.service.getDishList(dishListParams).subscribe(res => {
@@ -102,7 +103,6 @@ export class DishEditComponent implements OnInit {
           this.imgUrl = data.MenuImage;
           console.log(this.validateForm.value);
         }
-
       });
     }
   }
@@ -123,7 +123,9 @@ export class DishEditComponent implements OnInit {
 
     this.service.editDish(params, file).subscribe(res => {
       if (res.State == 0) {
-        this.message.create('success', res.Msg);
+        swal(res.Msg, {
+          icon: `success`,
+        });
         this.router.navigateByUrl('/dishMgr');
       }
     });
@@ -134,6 +136,7 @@ export class DishEditComponent implements OnInit {
 
   getUnitList() {
     let params: UnitListParams = new UnitListParams();
+    params.PageSize = 9999;
     this.service.getUnitList(params).subscribe(res => {
       if (res.State == 0) {
         this._unitList = res.Value;
@@ -142,6 +145,7 @@ export class DishEditComponent implements OnInit {
   }
   getTypeList() {
     let params: TypeListParams = new TypeListParams();
+    params.PageSize = 9999;
     this.service.getTypeList(params).subscribe(res => {
       if (res.State == 0) {
         this._typeList = res.Value;
@@ -150,6 +154,7 @@ export class DishEditComponent implements OnInit {
   }
   getFlavorList() {
     let params: FlavorListParams = new FlavorListParams();
+    params.PageSize = 9999;
     this.service.getFlavorList(params).subscribe(res => {
       if (res.State == 0) {
         this._flavorList = res.Value;
@@ -158,6 +163,7 @@ export class DishEditComponent implements OnInit {
   }
   getKitchenList() {
     let params: KitchenListParams = new KitchenListParams();
+    params.PageSize = 9999;
     this.service.getKitchenList(params).subscribe(res => {
       if (res.State == 0) {
         this._kitchenList = res.Value;

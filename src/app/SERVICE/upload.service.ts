@@ -14,7 +14,6 @@ export class UploadService {
 
     public makeFileRequest(url: string, postData: any, files: File[], fieldname: string): Observable<any> {
         return Observable.create(observer => {
-            debugger;
             let formData: FormData = new FormData(),
                 xhr: XMLHttpRequest = new XMLHttpRequest();
             //formData 文件流追加

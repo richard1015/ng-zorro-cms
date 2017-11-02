@@ -69,43 +69,38 @@ export class TableMgrComponent implements OnInit {
     });
   }
   edit(item: any = {}) {
-    // swal({
-    //     title: '请输入名称',
-    //     text: item.SName || "",
-    //     content: 'input',
-    //     buttons: ['取消', '确定'],
-    // })
-    //     .then(text => {
-    //         if (text) {
-    //             let params: EditUnitParams = new EditUnitParams();
-    //             params.Id = item.Id || 0;
-    //             params.SName = text;
-    //             this.service.editUnit(params).subscribe((res) => {
-    //                 if (res.State == 0) {
-    //                     if (item.SName) {
-    //                         item.SName = text;
-    //                     } else {
-    //                         this.search(true);
-    //                     }
-    //                     swal(res.Msg, {
-    //                         icon: `success`,
-    //                     });
-    //                 }
-    //             });
+    swal({
+      title: '请输入桌号名称',
+      text: item.SName || "",
+      content: 'input',
+      buttons: ['取消', '确定'],
+    })
+      .then(text => {
+        if (text) {
+          let params: EditTableParams = new EditTableParams();
+          params.DtNumber = text;
+          this.service.editTable(params).subscribe((res) => {
+            if (res.State == 0) {
+              this.search(true);
+              swal(res.Msg, {
+                icon: `success`,
+              });
+            }
+          });
 
-    //         } else {
-    //             swal.stopLoading();
-    //             swal.close();
-    //         }
-    //     })
-    //     .catch(err => {
-    //         if (err) {
-    //             swal('Oh noes!', '服务器异常，请稍后再试!', 'error');
-    //         } else {
-    //             swal.stopLoading();
-    //             swal.close();
-    //         }
-    //     });
+        } else {
+          swal.stopLoading();
+          swal.close();
+        }
+      })
+      .catch(err => {
+        if (err) {
+          swal('Oh noes!', '服务器异常，请稍后再试!', 'error');
+        } else {
+          swal.stopLoading();
+          swal.close();
+        }
+      });
   }
   delete(id: number, idx: number) {
     swal(`暂未开放此功能!`, {

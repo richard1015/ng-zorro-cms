@@ -7,6 +7,9 @@ import { NgZorroAntdModule } from "ng-zorro-antd";
 import { ShopMgrService } from './shopMgr.service';
 import { StaffComponent } from './staff/staff.component';
 import { AuthComponent } from './auth/auth.component';
+import { StaffEditComponent } from './staff/staffEdit/staffEdit.component';
+import { DishMgrService } from '../dishMgr/dishMgr.service';
+import { AuthEditComponent } from './auth/authEdit/authEdit.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,8 +20,10 @@ import { AuthComponent } from './auth/auth.component';
   ],
   declarations: [ShopMgrComponent,
     StaffComponent,
-    AuthComponent
+    StaffEditComponent,
+    AuthComponent,
+    AuthEditComponent
 ],
-  providers:[ShopMgrService]
+  providers:[ShopMgrService,DishMgrService]
 })
 export class ShopMgrModule { }

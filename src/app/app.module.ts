@@ -13,10 +13,12 @@ import { UploadService } from './SERVICE/upload.service';
 import { ApiService } from './SERVICE/api.service';
 import { WebSocketService } from './SERVICE/webSocket.service';
 import { LocalStorage } from './SERVICE/local.storage';
+import { OpenShopComponent } from './openShop/openShop.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OpenShopComponent
   ],
   imports: [
     BrowserModule,
@@ -37,4 +39,4 @@ import { LocalStorage } from './SERVICE/local.storage';
     }],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

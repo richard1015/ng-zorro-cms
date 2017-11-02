@@ -18,9 +18,36 @@ export class ShopMgrService {
     public getStaffList(params: StaffListParams) {
         return this.api.Post(params, "Employee");
     }
+    //编辑员工
+    public editStaff(params: EditStaffParams) {
+        return this.api.Post(params, "EmployeeAdd");
+    }
+    //删除员工
+    public deleteStaff(params: DelStaffParams) {
+        return this.api.Post(params, "EmployeeDel");
+    }
     //获取角色列表
     public getAuthList(params: AuthListParams) {
         return this.api.Post(params, "GetShopAllRole");
+    }
+    //新增角色
+    public addAuthList(params: AddRoleParams) {
+        return this.api.Post(params, "AddRole");
+    }
+    //获取权限列表
+    public getJursList() {
+        return this.api.Post({
+            "PageIndex": "1",
+            "PageSize": "9999"
+        }, "GetUserJurs");
+    }
+    //获取角色对应权限
+    public getJursById(params: JursByIdParams) {
+        return this.api.Post(params, "RoleJurisList");
+    }
+    //修改角色权限
+    public editJurs(params: EditJursByIdParams) {
+        return this.api.Post(params, "UpdateRoleJuris");
     }
 }
 
@@ -39,4 +66,26 @@ export class EditShopInfoParams {
     ShopImg: string = "";
     Tell: string = "";
     BusinessHours: string = "";
+}
+export class DelStaffParams {
+    Id: number;
+}
+export class EditStaffParams {
+    Id: number = 0;
+    JobNumber: string = "";
+    JobName: string = "";
+    Phone: string = "";
+    Pwd: string = "";
+    RoleID: string = "";
+    KitchenId: string = "";
+}
+export class AddRoleParams {
+    RoleName: string;
+}
+export class JursByIdParams {
+    RoleId: number;
+}
+export class EditJursByIdParams {
+    RoleID: number;
+    JurisID: string;
 }

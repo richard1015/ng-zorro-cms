@@ -12,13 +12,15 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class AppComponent implements OnInit {
 
   validateForm: FormGroup;
-
+  isCollapsed = false;
+  loading=false;
   _submitForm() {
     for (const i in this.validateForm.controls) {
       this.validateForm.controls[i].markAsDirty();
     }
-
+    this.loading=true;
     this.api.Post(this.validateForm.value, "ShopUserLogin").subscribe((res) => {
+      this.loading=false;
       if (res.State == 0) {
         this.ls.setObject("USERINFO", { Guid: res.Value });
         this.router.navigateByUrl("/dishMgr");
