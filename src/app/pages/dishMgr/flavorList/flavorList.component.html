@@ -84,7 +84,7 @@
     </form>
   </div>
   <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
-    <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 240 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
+    <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 450 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
       (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
       [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
       [nzShowTitle]="_title" [nzSize]="_size">

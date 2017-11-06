@@ -48,7 +48,7 @@ export class TypeListComponent implements OnInit {
         this._loading = true;
         this.service.getTypeList(this.params).subscribe(res => {
             this._loading = false;
-            if (res.State == 0) {
+            if (res.State == 0 && res.Value) {
                 this._dataSet = res.Value;
                 this._dataSetCount = res.TotalNumber;
             }

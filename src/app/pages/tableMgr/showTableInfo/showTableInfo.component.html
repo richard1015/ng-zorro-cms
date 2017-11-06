@@ -1,13 +1,6 @@
 <div class="components-table-demo-control-bar">
   <form nz-form [nzLayout]="'inline'">
     <div nz-row nz-form-item>
-      <div nz-form-control>
-        <button [routerLink]="['edit',0]" nz-button [nzType]="'primary'">
-          <span>新增菜品</span>
-        </button>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
       <div nz-form-label>
         <label>Fixed Header</label>
       </div>
@@ -33,89 +26,89 @@
         </nz-radio-group>
       </div>
     </div>
+
     <div nz-row nz-form-item>
       <div nz-form-label>
-        <label>菜品名称</label>
+        <label>时间设置</label>
       </div>
       <div nz-form-control>
-        <nz-input [nzSize]="'large'" [nzPlaceHolder]="'请输入菜品名称'" name="name" [(ngModel)]="dishListParams.MenuName"></nz-input>
+        <div nz-form-control nz-col [nzSpan]="11">
+          <nz-datepicker [(ngModel)]="_beginTime" name="beginTime" [nzPlaceHolder]="'begin'"></nz-datepicker>
+        </div>
+        <div nz-col [nzSpan]="1">
+          <p nz-form-split>-</p>
+        </div>
+        <div nz-form-control nz-col [nzSpan]="11">
+          <nz-datepicker [(ngModel)]="_endTime" name="endTime" [nzPlaceHolder]="'end'"></nz-datepicker>
+        </div>
+
       </div>
     </div>
     <div nz-row nz-form-item>
       <div nz-form-control>
-        <button nz-button [nzType]="'primary'" (click)="search(true)">查询</button>
+          <button nz-button [nzType]="'primary'" (click)="search(true)" [nzLoading]="_loading">查询</button>
       </div>
     </div>
+
     <div nz-row nz-form-item>
       <div nz-form-control>
-        <button nz-button (click)="clear()" [disabled]="_loading">清除</button>
+          <button nz-button (click)="clear()" [disabled]="_loading">清除</button>
       </div>
     </div>
+
+
   </form>
 </div>
 <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
   <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 450 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
     (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
     [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
-    [nzShowTitle]="_title" [nzSize]="_size" [nzIsPageIndexReset]="true">
+    [nzShowTitle]="_title" [nzSize]="_size">
     <span nz-table-title>Here is title</span>
     <ng-template #nzFixedHeader [ngIf]="_header&&!_fixHeader">
       <thead nz-thead>
         <tr>
+          <th nz-th [nzExpand]="true"></th>
           <th nz-th>
             <span>Id</span>
           </th>
           <th nz-th>
-            <span>菜品名称</span>
+            <span>订单编号</span>
           </th>
           <th nz-th>
-            <span>Image</span>
+            <span>客人数量</span>
           </th>
           <th nz-th>
-            <span>菜品价格</span>
+            <span>订单金额</span>
           </th>
           <th nz-th>
-            <span>菜品类型</span>
-          </th>
-          <th nz-th>
-            <span>对应后厨</span>
-          </th>
-          <th nz-th>
-            <span>单位</span>
-          </th>
-          <th nz-th>
-            <span>口味</span>
-          </th>
-          <th nz-th>
-            <span>Action</span>
+            <span>订单时间</span>
           </th>
         </tr>
       </thead>
     </ng-template>
     <tbody nz-tbody>
-      <tr nz-tbody-tr *ngFor="let data of nzTable.data;let idx=index;">
-        <td nz-td>{{data.Id}}</td>
-        <td nz-td>{{data.MenuName}}</td>
-        <td nz-td>
-          <a href="{{data.MenuImage}}" target="_blank" [hidden]="!data.MenuImage">
-            <img class="shopImg" [src]="data.MenuImage" alt="">
-          </a>
-        </td>
-        <td nz-td>{{data.MenuPrice}}</td>
-        <td nz-td>{{data.TypeName}}</td>
-        <td nz-td>{{data.KTypeName}}</td>
-        <td nz-td>{{data.SName}}</td>
-        <td nz-td>{{data.FName}}</td>
-        <td nz-td>
-          <span>
-            <a [routerLink]="['edit',data.Id]">修改 一 {{data.MenuName}}</a>
-            <span nz-table-divider></span>
-            <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
-              <a nz-popconfirm>删除</a>
-            </nz-popconfirm>
-          </span>
-        </td>
-      </tr>
+      <ng-template ngFor let-data [ngForOf]="nzTable.data">
+        <tr nz-tbody-tr>
+          <td nz-td [nzExpand]="true">
+            <nz-row-expand-icon [(nzExpand)]="data.expand" (click)="readerOrder(data)"></nz-row-expand-icon>
+          </td>
+          <td nz-td>{{data.Id}}</td>
+          <td nz-td>{{data.OrderNumber}}</td>
+          <td nz-td>{{data.PeopleNum}}</td>
+          <td nz-td>{{data.Price}}</td>
+          <td nz-td>{{data.CreateTime}}</td>
+        </tr>
+
+        <ng-template ngFor let-dataItem [ngForOf]="data.List" *ngIf="data.expand">
+          <tr nz-tbody-tr>
+            <td nz-td></td>
+            <td nz-td colspan="5" [ngClass]="{'park': dataItem.IsDelete==2}">
+              {{dataItem.ShopMenuName}}*{{dataItem.MenuNumber}}=￥{{dataItem.MenuPrice}}
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
     </tbody>
     <span nz-table-footer>Here is footer</span>
   </nz-table>

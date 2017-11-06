@@ -69,6 +69,7 @@ export class AuthEditComponent implements OnInit {
       if (res.State == 0) {
         swal(res.Msg, {
           icon: `success`,
+          timer: 1000,
         });
         this.router.navigateByUrl('/shopMgr/auth');
       }

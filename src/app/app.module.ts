@@ -28,7 +28,8 @@ import { OpenShopComponent } from './openShop/openShop.component';
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot(),
     AppRoutes
-  ], providers: [
+  ],
+  providers: [
     UploadService,
     ApiService,
     WebSocketService,
@@ -36,7 +37,8 @@ import { OpenShopComponent } from './openShop/openShop.component';
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy
-    }],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

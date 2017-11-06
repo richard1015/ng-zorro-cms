@@ -4,12 +4,15 @@
       <label>图片</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
-      <img [src]="imgUrl" alt="">
+      <a href="{{imgUrl}}" target="_blank" [hidden]="!imgUrl">
+        <img class="shopImg" [src]="imgUrl" alt="">
+      </a>
+      <input id="file1" accept type="file" (change)="fileChange($event)" />
     </div>
   </div>
 
 
-  <div nz-form-item nz-row>
+  <!-- <div nz-form-item nz-row>
     <div nz-form-label nz-col [nzSpan]="6">
       <label>图片上传/更改</label>
     </div>
@@ -38,7 +41,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
   <div nz-form-item nz-row>

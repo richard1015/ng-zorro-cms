@@ -54,6 +54,7 @@ export class DishListParams {
     Id: number = 0;
     PageIndex: number = 1;
     PageSize: number = 10;
+    MenuName:string="";
 }
 export class DelDishParams {
     Id: number = 0;

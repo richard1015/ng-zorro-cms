@@ -54,14 +54,14 @@ export class DishEditComponent implements OnInit {
 
     this.cropperSettings.noFileInput = true;
 
-    this.cropperSettings.width = 150;
-    this.cropperSettings.height = 100;
+    this.cropperSettings.width = 400;
+    this.cropperSettings.height = 300;
 
-    this.cropperSettings.croppedWidth = 150;
-    this.cropperSettings.croppedHeight = 100;
+    this.cropperSettings.croppedWidth = 400;
+    this.cropperSettings.croppedHeight = 300;
 
-    this.cropperSettings.canvasWidth = 300;
-    this.cropperSettings.canvasHeight = 200;
+    this.cropperSettings.canvasWidth = 400;
+    this.cropperSettings.canvasHeight = 300;
 
     this.cropperSettings.minWidth = 100;
     this.cropperSettings.minHeight = 100;
@@ -80,7 +80,16 @@ export class DishEditComponent implements OnInit {
     this.getTypeList();
     this.getFlavorList();
     this.getKitchenList();
-    this.validateForm = this.fb.group(new EditDishParams());
+    let dishbehaviorObj = this.ls.getObject("dishbehavior");
+    if (dishbehaviorObj.MenuName) {
+      dishbehaviorObj.MenuName = "";
+      dishbehaviorObj.MenuPrice = "";
+      dishbehaviorObj.Id=0;
+      this.validateForm = this.fb.group(dishbehaviorObj);
+      this.selectedOption = parseInt(dishbehaviorObj.CompanyId);
+    } else {
+      this.validateForm = this.fb.group(new EditDishParams());
+    }
     let id = this.routerInfo.snapshot.params["id"];
     if (id != "0") {
       let dishListParams: DishListParams = new DishListParams();
@@ -116,22 +125,25 @@ export class DishEditComponent implements OnInit {
         params[key] = _data;
       }
     }
-    let file: File[];
-    if (this.data1.image) {
-      file = [this.convertBase64UrlToBlob(this.data1.image)] as File[];
-    }
+    // let file: File[];
+    // if (this.data1.image) {
+    //   file = [this.convertBase64UrlToBlob(this.data1.image)] as File[];
+    // }
 
-    this.service.editDish(params, file).subscribe(res => {
+    this.ls.setObject("dishbehavior", params);
+
+    this.service.editDish(params, this.file).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
           icon: `success`,
+          timer: 1000,
         });
         this.router.navigateByUrl('/dishMgr');
       }
     });
   }
   cancel() {
-    window.history.back();
+    this.router.navigateByUrl('/dishMgr');
   }
 
   getUnitList() {
@@ -175,20 +187,25 @@ export class DishEditComponent implements OnInit {
   cropped(bounds: Bounds) {
     console.log(bounds);
   }
-
+  file: File[];
   fileChange($event) {
-    const image: any = new Image();
-    const file: File = $event.target.files[0];
-    this.fileName = file.name;
-    this.fileType = file.type;
-    const myReader: FileReader = new FileReader();
-    const that = this;
-    myReader.onloadend = (loadEvent: any) => {
-      image.src = loadEvent.target.result;
-      that.cropper.setImage(image);
-    };
-    myReader.readAsDataURL(file);
+    this.file = $event.target.files;
+    let filename = this.file[0].name;
+    this.validateForm.controls.MenuName.setValue(filename.substring(0, filename.lastIndexOf('.')));
   }
+  // fileChange($event) {
+  //   const image: any = new Image();
+  //   const file: File = $event.target.files[0];
+  //   this.fileName = file.name;
+  //   this.fileType = file.type;
+  //   const myReader: FileReader = new FileReader();
+  //   const that = this;
+  //   myReader.onloadend = (loadEvent: any) => {
+  //     image.src = loadEvent.target.result;
+  //     that.cropper.setImage(image);
+  //   };
+  //   myReader.readAsDataURL(file);
+  // }
 
   /**  
    * 将以base64的图片url数据转换为Blob  

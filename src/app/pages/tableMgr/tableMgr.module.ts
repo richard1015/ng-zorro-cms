@@ -5,6 +5,8 @@ import { TableMgrRoutes } from './tableMgr.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from "ng-zorro-antd";
 import { TableMgrService } from './tableMgr.service';
+import { ShowTableInfoComponent } from './showTableInfo/showTableInfo.component';
+import { UnitService } from '../../SERVICE/unit.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -13,7 +15,9 @@ import { TableMgrService } from './tableMgr.service';
     NgZorroAntdModule,
     FormsModule,
   ],
-  declarations: [TableMgrComponent],
-  providers: [TableMgrService]
+  declarations: [TableMgrComponent,
+    ShowTableInfoComponent
+],
+  providers: [TableMgrService,UnitService]
 })
 export class TableMgrModule { }

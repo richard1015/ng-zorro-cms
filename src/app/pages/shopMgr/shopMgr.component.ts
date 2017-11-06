@@ -38,9 +38,10 @@ export class ShopMgrComponent implements OnInit {
     let params = this.validateForm.value;
 
     this.service.editShopInfo(params, this.file).subscribe(res => {
-      if (res.State == 0) {
+      if (res.State == 0 && res.Value) {
         swal(res.Msg, {
           icon: `success`,
+          timer: 1000,
         });
       }
     });

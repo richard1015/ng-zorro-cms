@@ -84,7 +84,7 @@
   </form>
 </div>
 <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
-  <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 240 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
+  <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 450 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
     (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
     [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
     [nzShowTitle]="_title" [nzSize]="_size">
@@ -97,6 +97,9 @@
           </th>
           <th nz-th>
             <span>桌号</span>
+          </th>
+          <th nz-th>
+            <span>当前状态</span>
           </th>
           <th nz-th>
             <span>人数</span>
@@ -114,12 +117,16 @@
           <nz-input [(ngModel)]="data.DtNumber" [nzPlaceHolder]="'请输入桌号名称'" (change)="tableChange(data)"></nz-input>
         </td>
         <td nz-td>
-          <nz-input-number [(ngModel)]="data.DtPeople" [nzMin]="1" [nzMax]="20"  (change)="tableChange(data)" [nzStep]="1"></nz-input-number>
+          <nz-tag *ngIf="data.DtState=='1'" [nzColor]="'pink'">已开台{{data.DtMinute}}分钟</nz-tag>
+          <nz-tag *ngIf="data.DtState=='0'" [nzColor]="'green'">空闲中</nz-tag>
+        </td>
+        <td nz-td>
+          <nz-input-number [(ngModel)]="data.DtPeople" [nzMin]="1" [nzMax]="20" (change)="tableChange(data)" [nzStep]="1"></nz-input-number>
         </td>
         <td nz-td>
           <span>
-            <!-- <a (click)="edit(data)">修改 一 {{data.SName}}</a> -->
-            <!-- <span nz-table-divider></span> -->
+            <a [routerLink]="['showInfo',data.Id]">查看{{data.DtNumber}}桌 一 订单详情</a>
+            <span nz-table-divider></span>
             <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
               <a nz-popconfirm>删除</a>
             </nz-popconfirm>

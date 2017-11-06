@@ -79,8 +79,9 @@ export class TableMgrComponent implements OnInit {
         if (text) {
           let params: EditTableParams = new EditTableParams();
           params.DtNumber = text;
+          params.DtPeople = 4;
           this.service.editTable(params).subscribe((res) => {
-            if (res.State == 0) {
+            if (res.State == 0 && res.Value) {
               this.search(true);
               swal(res.Msg, {
                 icon: `success`,
@@ -102,6 +103,7 @@ export class TableMgrComponent implements OnInit {
         }
       });
   }
+  
   delete(id: number, idx: number) {
     swal(`暂未开放此功能!`, {
       icon: `info`,

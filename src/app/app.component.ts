@@ -42,8 +42,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.validateForm = this.fb.group({
-      Phone: [15010156268, [Validators.required]],
-      Pwd: [123456, [Validators.required]]
+      Phone: ['', [Validators.required]],
+      Pwd: ['', [Validators.required]]
     });
   }
 }
