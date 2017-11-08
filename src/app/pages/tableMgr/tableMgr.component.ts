@@ -1,18 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import swal from 'sweetalert';
-import { TableMgrService, TableListParams, EditTableParams } from './tableMgr.service';
+import { TableMgrService, TableListParams, EditTableParams, ChangePriceParams, PayOrderParams, ChangeTableParams } from './tableMgr.service';
 @Component({
   selector: 'app-tableMgr',
   templateUrl: './tableMgr.component.html',
   styleUrls: ['./tableMgr.component.css']
 })
-export class TableMgrComponent implements OnInit {
-
+export class TableMgrComponent implements OnInit, OnDestroy {
+  ngOnDestroy(): void {
+    clearInterval(this.tempInterval);
+  }
+  tempInterval = setInterval(() => {
+    this.ngOnInit();
+  }, 1000 * 30);
 
   params: TableListParams = new TableListParams();
+
+
+  //当前空闲中桌台
+  _tableFreeList = [];
 
   _dataSet = [];
   _dataSetCount = 0;
@@ -37,7 +46,6 @@ export class TableMgrComponent implements OnInit {
     private service: TableMgrService) {
   }
   tableChange(item) {
-    console.log(item);
     let params: EditTableParams = new EditTableParams();
     params.Id = item.Id || 0;
     params.DtNumber = item.DtNumber;
@@ -65,6 +73,49 @@ export class TableMgrComponent implements OnInit {
       if (res.State == 0) {
         this._dataSet = res.Value;
         this._dataSetCount = res.TotalNumber;
+      }
+    });
+  }
+  //获取空闲桌，准备转台
+  getTableFreeList(item, checked) {
+    if (checked) {
+      if (!item.OrderNumber) {
+        swal("当前桌台空闲中，不可执行此操作！", {
+          icon: `info`,
+        });
+        return;
+      }
+      let params: TableListParams = new TableListParams();
+      params.DtState = 0;//-1获取全部，0未开台1已开台"
+      params.PageIndex = 1;
+      params.PageSize = 999999;
+      this.service.getTableList(params).subscribe(res => {
+        if (res.State == 0 && res.Value) {
+          this._tableFreeList = res.Value;
+        }
+      });
+    }
+  }
+  //转台
+  exchangeTable(currentTableItem, newTableItem) {
+    if (!currentTableItem.OrderNumber) {
+      swal("当前桌台空闲中，不可执行此操作！", {
+        icon: `info`,
+      });
+      return;
+    }
+
+    let params: ChangeTableParams = new ChangeTableParams();
+    params.OldId = currentTableItem.Id;
+    params.NewId = newTableItem.Id;
+    params.OrderNumber = currentTableItem.OrderNumber;
+
+    this.service.changeTable(params).subscribe(res => {
+      if (res.State == 0) {
+        this.search(true);
+        swal(res.Msg, {
+          icon: `success`,
+        });
       }
     });
   }
@@ -103,7 +154,67 @@ export class TableMgrComponent implements OnInit {
         }
       });
   }
-  
+  pay(item, payType) {
+    if (!item.OrderNumber) {
+      swal("当前桌台无订单！", {
+        icon: `info`,
+      });
+      return;
+    }
+    let params: PayOrderParams = new PayOrderParams();
+    params.OrderNum = item.OrderNumber;
+    params.PayMode = payType;
+
+    this.service.payOrder(params).subscribe(res => {
+      if (res.State == 0) {
+        this.search(true);
+        swal(res.Msg, {
+          icon: `success`,
+        });
+      }
+    });
+
+  }
+  changePrice(item) {
+    if (!item.OrderNumber) {
+      swal("当前桌台空闲中，不可执行此操作！", {
+        icon: `info`,
+      });
+      return;
+    }
+    swal({
+      title: '请输入抹零金额',
+      text: "订单金额" + item.Price,
+      content: 'input',
+      buttons: ['取消', '确定'],
+    })
+      .then(text => {
+        if (text) {
+          let params: ChangePriceParams = new ChangePriceParams();
+          params.OrderNum = item.OrderNumber;
+          params.ReducePrice = text;
+          this.service.changePrice(params).subscribe((res) => {
+            if (res.State == 0) {
+              this.search(true);
+              swal(res.Msg, {
+                icon: `success`,
+              });
+            }
+          });
+        } else {
+          swal.stopLoading();
+          swal.close();
+        }
+      })
+      .catch(err => {
+        if (err) {
+          swal('Oh noes!', '服务器异常，请稍后再试!', 'error');
+        } else {
+          swal.stopLoading();
+          swal.close();
+        }
+      });
+  }
   delete(id: number, idx: number) {
     swal(`暂未开放此功能!`, {
       icon: `info`,

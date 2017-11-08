@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
       this.loading=false;
       if (res.State == 0) {
         this.ls.setObject("USERINFO", { Guid: res.Value });
-        this.router.navigateByUrl("/dishMgr");
+        this._message.create('success', '登录成功!');
       }
     });
   }

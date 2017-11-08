@@ -19,9 +19,21 @@ export class TableMgrService {
     public getOrderInfo(params: OrderInfoParams) {
         return this.api.Post(params, "BGetHistoryBillInfo");
     }
+    //抹零
+    public changePrice(params: ChangePriceParams) {
+        return this.api.Post(params, "StaffReducePrice");
+    }
+    //买单
+    public payOrder(params: PayOrderParams) {
+        return this.api.Post(params, "StaffDownPay");
+    }
+    //转台 
+    public changeTable(params: ChangeTableParams) {
+        return this.api.Post(params, "BGetTableChange");
+    }
 }
 export class TableListParams {
-    private DtState: number = -1;
+    DtState: number = -1;
     PageIndex: number = 1;
     PageSize: number = 10;
 }
@@ -38,5 +50,18 @@ export class TableInfoListParams {
     PageSize: number = 10;
 }
 export class OrderInfoParams {
-    Id: number=0;
+    Id: number = 0;
+}
+export class ChangePriceParams {
+    OrderNum: string = "";
+    ReducePrice: string = "";
+}
+export class PayOrderParams {
+    OrderNum: string = "";
+    PayMode: number = 0;
+}
+export class ChangeTableParams {
+    OldId: number;
+    NewId: number;
+    OrderNumber: string;
 }

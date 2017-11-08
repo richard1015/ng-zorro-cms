@@ -6,6 +6,11 @@ export class ShopMgrService {
 
     constructor(private api: ApiService) { }
 
+    /** 是否正在加载中 */
+    get loading(): boolean {
+        return this.api.loading;
+    }
+
     //获取商铺信息
     public getShopInfo() {
         return this.api.Post({}, "BGetPCShopInfoList");

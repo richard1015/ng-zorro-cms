@@ -1,0 +1,122 @@
+<div class="components-table-demo-control-bar">
+    <form nz-form [nzLayout]="'inline'">
+      <div nz-row nz-form-item>
+        <div nz-form-control>
+          <button [routerLink]="['setMenuEdit',0]" nz-button [nzType]="'primary'">
+            <span>新增套餐</span>
+          </button>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Fixed Header</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_fixHeader" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>Size</label>
+        </div>
+        <div nz-form-control>
+          <nz-radio-group [(ngModel)]="_size" [ngModelOptions]="{standalone: true}">
+            <label nz-radio-button [nzValue]="'default'">
+              <span>Default</span>
+            </label>
+            <label nz-radio-button [nzValue]="'middle'">
+              <span>Middle</span>
+            </label>
+            <label nz-radio-button [nzValue]="'small'">
+              <span>Small</span>
+            </label>
+          </nz-radio-group>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-label>
+          <label>套餐名称</label>
+        </div>
+        <div nz-form-control>
+          <nz-input [nzSize]="'large'" [nzPlaceHolder]="'请输入菜品名称'" name="name" [(ngModel)]="listParams.MenuName"></nz-input>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-control>
+          <button nz-button [nzType]="'primary'" (click)="search(true)">查询</button>
+        </div>
+      </div>
+      <div nz-row nz-form-item>
+        <div nz-form-control>
+          <button nz-button (click)="clear()" [disabled]="_loading">清除</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
+    <nz-table #nzTable [nzScroll]="_fixHeader?{ y: 450 }:null" [nzAjaxData]="_dataSet" [(nzPageIndex)]="_pageIndex" [(nzPageSize)]="_pageSize"
+      (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
+      [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
+      [nzShowTitle]="_title" [nzSize]="_size" [nzIsPageIndexReset]="true">
+      <span nz-table-title>Here is title</span>
+      <ng-template #nzFixedHeader [ngIf]="_header&&!_fixHeader">
+        <thead nz-thead>
+          <tr>
+            <th nz-th>
+              <span>Id</span>
+            </th>
+            <th nz-th>
+              <span>菜品名称</span>
+            </th>
+            <th nz-th>
+              <span>Image</span>
+            </th>
+            <th nz-th>
+              <span>菜品价格</span>
+            </th>
+            <th nz-th>
+              <span>菜品类型</span>
+            </th>
+            <th nz-th>
+              <span>对应后厨</span>
+            </th>
+            <th nz-th>
+              <span>单位</span>
+            </th>
+            <th nz-th>
+              <span>套餐内容</span>
+            </th>
+            <th nz-th>
+              <span>Action</span>
+            </th>
+          </tr>
+        </thead>
+      </ng-template>
+      <tbody nz-tbody>
+        <tr nz-tbody-tr *ngFor="let data of nzTable.data;let idx=index;">
+          <td nz-td>{{data.Id}}</td>
+          <td nz-td>{{data.MenuName}}</td>
+          <td nz-td>
+            <a href="{{data.MenuImage}}" target="_blank" [hidden]="!data.MenuImage">
+              <img class="shopImg" [src]="data.MenuImage" alt="">
+            </a>
+          </td>
+          <td nz-td>{{data.MenuPrice}}</td>
+          <td nz-td>{{data.TypeName}}</td>
+          <td nz-td>{{data.KTypeName}}</td>
+          <td nz-td>{{data.SName}}</td>
+          <td nz-td>{{data.MenuId}}</td>
+          <td nz-td>
+            <span>
+              <a [routerLink]="['setMenuEdit',data.Id]">修改 一 {{data.MenuName}}</a>
+              <span nz-table-divider></span>
+              <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
+                <a nz-popconfirm>删除</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+      <span nz-table-footer>Here is footer</span>
+    </nz-table>
+  </nz-spin>

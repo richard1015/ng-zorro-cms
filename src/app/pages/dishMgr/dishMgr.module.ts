@@ -11,6 +11,8 @@ import { TypeListComponent } from './typeList/typeList.component';
 import { KitchenListComponent } from './kitchenList/kitchenList.component';
 import { FlavorListComponent } from './flavorList/flavorList.component';
 import { UnitListComponent } from './unitList/unitList.component';
+import { SetMenuListComponent } from './setMenuList/setMenuList.component';
+import { SetMenuEditComponent } from './setMenuList/setMenuEdit/setMenuEdit.component';
 
 @NgModule({
   imports: [
@@ -31,6 +33,8 @@ import { UnitListComponent } from './unitList/unitList.component';
     FlavorListComponent,
     KitchenListComponent,
     UnitListComponent,
+    SetMenuListComponent,
+    SetMenuEditComponent
 ],
   providers: [DishMgrService]
 })

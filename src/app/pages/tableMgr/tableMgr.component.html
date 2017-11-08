@@ -117,7 +117,7 @@
           <nz-input [(ngModel)]="data.DtNumber" [nzPlaceHolder]="'请输入桌号名称'" (change)="tableChange(data)"></nz-input>
         </td>
         <td nz-td>
-          <nz-tag *ngIf="data.DtState=='1'" [nzColor]="'pink'">已开台{{data.DtMinute}}分钟</nz-tag>
+          <nz-tag *ngIf="data.DtState=='1'" [nzColor]="'pink'">已开台{{data.DtMinute}}分钟 当前订单金额：￥{{data.Price}}</nz-tag>
           <nz-tag *ngIf="data.DtState=='0'" [nzColor]="'green'">空闲中</nz-tag>
         </td>
         <td nz-td>
@@ -125,11 +125,42 @@
         </td>
         <td nz-td>
           <span>
-            <a [routerLink]="['showInfo',data.Id]">查看{{data.DtNumber}}桌 一 订单详情</a>
+            <a [routerLink]="['showInfo',data.Id]">历史订单</a>
             <span nz-table-divider></span>
-            <nz-popconfirm [nzTitle]="'确定要删除吗？'" (nzOnConfirm)="delete(data.Id,idx)" (nzOnCancel)="cancel()">
-              <a nz-popconfirm>删除</a>
-            </nz-popconfirm>
+            <nz-dropdown>
+              <a class="ant-dropdown-link" nz-dropdown>
+                买单
+                <i class="anticon anticon-down"></i>
+              </a>
+              <ul nz-menu>
+                <li nz-menu-item>
+                  <a (click)="pay(data,3)">微信</a>
+                </li>
+                <li nz-menu-item>
+                  <a (click)="pay(data,4)">支付宝</a>
+                </li>
+                <li nz-menu-item>
+                  <a (click)="pay(data,5)">现金</a>
+                </li>
+                <li nz-menu-item>
+                  <a (click)="pay(data,6)">刷卡</a>
+                </li>
+              </ul>
+            </nz-dropdown>
+            <span nz-table-divider></span>
+            <a (click)="changePrice(data)">抹零</a>
+            <span nz-table-divider></span>
+            <nz-dropdown [nzTrigger]="'click'" (nzVisibleChange)="getTableFreeList(data,$event)">
+              <a class="ant-dropdown-link" nz-dropdown>
+                转台
+                <i class="anticon anticon-down"></i>
+              </a>
+              <ul nz-menu>
+                <li nz-menu-item *ngFor="let item of _tableFreeList">
+                  <a (click)="exchangeTable(data,item)">{{item.DtNumber}}桌--{{item.DtPeople}}人位</a>
+                </li>
+              </ul>
+            </nz-dropdown>
           </span>
         </td>
       </tr>

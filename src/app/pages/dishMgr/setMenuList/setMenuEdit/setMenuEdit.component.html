@@ -1,0 +1,126 @@
+<form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label>图片</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <a href="{{imgUrl}}" target="_blank" [hidden]="!imgUrl">
+        <img class="shopImg" [src]="imgUrl" alt="">
+      </a>
+      <input id="file1" accept type="file" (change)="fileChange($event)" />
+    </div>
+  </div>
+
+
+  <!-- <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSpan]="6">
+        <label>图片上传/更改</label>
+      </div>
+      <div nz-form-control nz-col [nzSpan]="14">
+        <div nz-col [nzSpan]="14">
+          <nz-card>
+            <ng-template #body>
+              <input id="file1" accept type="file" (change)="fileChange($event)" />
+  
+              <div class="my-md" *ngIf="data1.image">
+                <h3 class="text-md">裁剪后</h3>
+                <img [class.rounded-circle]="cropperSettings.rounded" [src]="data1.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+              </div>
+            </ng-template>
+          </nz-card>
+        </div>
+        <div nz-col [nzSpan]="14">
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <nz-card>
+                <ng-template #body>
+                  <img-cropper #cropper [image]="data1" [settings]="cropperSettings" (onCrop)="cropped($event)"></img-cropper>
+                </ng-template>
+              </nz-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>套餐名称</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="MenuName" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>适合人数</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input-number formControlName="MenuPeople" [nzSize]="'large'" [nzStep]="1" [nzMin]="0"></nz-input-number>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>套餐价格</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input-number formControlName="MenuPrice" [nzSize]="'large'" [nzStep]="1" [nzMin]="0"></nz-input-number>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>菜品类型</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-select formControlName="TypeId" [nzSize]="'large'" [nzMode]="'multiple'">
+        <nz-option *ngFor="let item of _typeList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <!-- <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>对应后厨</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-select formControlName="KitchenId" [nzSize]="'large'" [nzMode]="'multiple'">
+        <nz-option *ngFor="let item of _kitchenList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
+      </nz-select>
+    </div>
+  </div> -->
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>单位</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-select formControlName="CompanyId" [(ngModel)]="selectedOption" [nzSize]="'large'">
+        <nz-option *ngFor="let item of _unitList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>选择菜品</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+        <!-- <nz-select formControlName="MenuId" nzKeepUnListOptions [nzMode]="'multiple'" [nzShowSearch]="true" [nzPlaceHolder]="'请输入菜品名称'"
+        (nzSearchChange)="searchChange($event)" [nzNotFoundContent]="'无法找到'">
+        <nz-option *ngFor="let item of _searchDishOptions" [nzLabel]="item.MenuName" [nzValue]="item.Id">
+        </nz-option>
+      </nz-select> -->
+      <nz-select formControlName="MenuId" [nzMode]="'multiple'" [(ngModel)]="selectedOptionDish" [nzPlaceHolder]="'请输入菜品名称'"
+       [nzNotFoundContent]="'无法找到'">
+        <nz-option *ngFor="let item of _searchDishOptions" [nzLabel]="item.MenuName" [nzValue]="item.Id">
+        </nz-option>
+      </nz-select>
+    </div>
+  </div>
+
+  <div nz-form-item nz-row>
+    <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" (click)="submit()" [nzSize]="'large'">提交</button>
+      <button nz-button [nzSize]="'large'" (click)="cancel()">取消</button>
+    </div>
+  </div>
+</form>

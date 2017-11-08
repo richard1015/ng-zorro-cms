@@ -5,6 +5,7 @@ import { UploadService } from './upload.service';
 import { LocalStorage } from './local.storage';
 import { NzMessageService } from "ng-zorro-antd";
 import swal from 'sweetalert';
+import { environment } from '../../environments/environment';
 @Injectable()
 export class ApiService {
 
@@ -12,7 +13,31 @@ export class ApiService {
 
     constructor(private http: Http, private upload: UploadService, private ls: LocalStorage) { }
 
+    private _loading = false;
+
+    /** 是否正在加载中 */
+    get loading(): boolean {
+        return this._loading;
+    }
+
+    private begin() {
+        console.time('http');
+        this._loading = true;
+    }
+
+    private end() {
+        console.timeEnd();
+        this._loading = false;
+    }
+
+    /** 服务端URL地址 */
+    get SERVER_URL(): string {
+        return environment.SERVER_URL;
+    }
+
     private post(data: ParamData): Observable<ResponseInfo> {
+        this.begin();
+        
         let host = "/serverDianDian";
         let bodyObj = {
             cmd: data.cmd,
@@ -20,11 +45,6 @@ export class ApiService {
         };
         let body = `cmd=${data.cmd}&param=${JSON.stringify(data.param)}`;
         console.log("send infomation : " + body);
-
-        if (data.loadingState) {
-            //加载动画
-
-        }
 
         if (data.file) {
             return this.upload.makeFileRequest(host, bodyObj, data.file, data.fieldname)
@@ -81,6 +101,10 @@ export class ApiService {
                             break;
                     }
                     return true;
+                }).do(() => this.end())
+                .catch((res) => {
+                    this.end();
+                    return res;
                 });
         }
     }

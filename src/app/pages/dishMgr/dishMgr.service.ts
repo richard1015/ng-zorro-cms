@@ -13,6 +13,10 @@ export class DishMgrService {
     public delDish(params: DelDishParams) {
         return this.api.Post(params, "BGetMenuDel");
     }
+    //获取套餐列表
+    public getSetMenuList(params: SetMenuListParams) {
+        return this.api.Post(params, "BGetMenuTCList");
+    }
     //获取菜品单位列表
     public getUnitList(params: UnitListParams) {
         return this.api.Post(params, "BGetMenuCompanyList");
@@ -49,12 +53,21 @@ export class DishMgrService {
     public editDish(params: EditDishParams, file?: File[]) {
         return this.api.Post(params, "BGetMenuAdd", file);
     }
+    //新增/修改套餐
+    public editSetMenu(params: EditSetMenuParams, file?: File[]) {
+        return this.api.Post(params, "BGetMenuInfoAdd", file);
+    }
+    //根据名称搜索普通菜品（用于添加套餐时，选择菜品）
+    public searchDishByName(params: DishByNameParams) {
+        return this.api.Post(params, "BGetMenuInfoByName");
+    }
+
 }
 export class DishListParams {
     Id: number = 0;
     PageIndex: number = 1;
     PageSize: number = 10;
-    MenuName:string="";
+    MenuName: string = "";
 }
 export class DelDishParams {
     Id: number = 0;
@@ -69,6 +82,15 @@ export class TypeListParams {
     PageIndex: number = 1;
     PageSize: number = 9999;
 }
+
+export class SetMenuListParams {
+    Id: number = 0;
+    PageIndex: number = 1;
+    PageSize: number = 10;
+    MenuName: string = "";
+}
+
+
 //  BaseEditParams
 class BaseEditParams {
     Id: number = 0;
@@ -104,6 +126,21 @@ export class EditDishParams {
     KitchenId: string = "";
     CompanyId: string = "";
     FlavorId: string = "";
+}
+
+export class EditSetMenuParams {
+    Id: number = 0;
+    MenuName: string = "";
+    MenuPrice: string = "";
+    TypeId: string = "";
+    KitchenId: string = "";
+    CompanyId: string = "";
+    MenuId: string = "";
+    MenuPeople: string = "";
+}
+
+export class DishByNameParams {
+    MenuName: string = "";
 }
 
 

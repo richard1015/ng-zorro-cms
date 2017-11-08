@@ -5,6 +5,8 @@ import { TypeListComponent } from './typeList/typeList.component';
 import { UnitListComponent } from './unitList/unitList.component';
 import { KitchenListComponent } from './kitchenList/kitchenList.component';
 import { FlavorListComponent } from './flavorList/flavorList.component';
+import { SetMenuListComponent } from './setMenuList/setMenuList.component';
+import { SetMenuEditComponent } from './setMenuList/setMenuEdit/setMenuEdit.component';
 
 const routes: Routes = [
   { path: '', component: DishMgrComponent },
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path: 'flavorList', component: FlavorListComponent },
   { path: 'kitchenList', component: KitchenListComponent },
   { path: 'unitList', component: UnitListComponent },
+  { path: 'setMenuList', component: SetMenuListComponent },
+  { path: 'setMenuList/setMenuEdit/:id', component: SetMenuEditComponent },
 ];
 
 export const DishMgrRoutes = RouterModule.forChild(routes);
