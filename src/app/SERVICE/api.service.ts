@@ -5,7 +5,6 @@ import { UploadService } from './upload.service';
 import { LocalStorage } from './local.storage';
 import { NzMessageService } from "ng-zorro-antd";
 import swal from 'sweetalert';
-import { environment } from '../../environments/environment';
 @Injectable()
 export class ApiService {
 
@@ -30,14 +29,9 @@ export class ApiService {
         this._loading = false;
     }
 
-    /** 服务端URL地址 */
-    get SERVER_URL(): string {
-        return environment.SERVER_URL;
-    }
-
     private post(data: ParamData): Observable<ResponseInfo> {
         this.begin();
-        
+
         let host = "/serverDianDian";
         let bodyObj = {
             cmd: data.cmd,
@@ -65,11 +59,12 @@ export class ApiService {
                             swal(res.Msg, {
                                 icon: `error`,
                             });
+                            this.ls.setObject("USERINFO", {});
                             window.open('/', '_top');
                             break;
                     }
                     return true;
-                });
+              });
         } else {
             let myHeaders = new Headers();
             myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -97,6 +92,7 @@ export class ApiService {
                             swal(res.Msg, {
                                 icon: `error`,
                             });
+                            this.ls.setObject("USERINFO", {});
                             window.open('/', '_top');
                             break;
                     }

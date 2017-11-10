@@ -13,6 +13,7 @@ import { FlavorListComponent } from './flavorList/flavorList.component';
 import { UnitListComponent } from './unitList/unitList.component';
 import { SetMenuListComponent } from './setMenuList/setMenuList.component';
 import { SetMenuEditComponent } from './setMenuList/setMenuEdit/setMenuEdit.component';
+import { UnitService } from '../../SERVICE/unit.service';
 
 @NgModule({
   imports: [
@@ -36,6 +37,6 @@ import { SetMenuEditComponent } from './setMenuList/setMenuEdit/setMenuEdit.comp
     SetMenuListComponent,
     SetMenuEditComponent
 ],
-  providers: [DishMgrService]
+  providers: [DishMgrService,UnitService]
 })
 export class DishMgrModule { }

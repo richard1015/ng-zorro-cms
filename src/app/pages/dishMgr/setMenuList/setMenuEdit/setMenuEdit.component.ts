@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert';
 import { LocalStorage } from '../../../../SERVICE/local.storage';
+import { UnitService } from '../../../../SERVICE/unit.service';
 @Component({
   selector: 'app-setMenuEdit',
   templateUrl: './setMenuEdit.component.html',
@@ -21,6 +22,7 @@ export class SetMenuEditComponent implements OnInit {
 
   selectedOption;
   selectedOptionDish;
+  selectedOptionTypeId;
 
   imgUrl;
 
@@ -30,7 +32,8 @@ export class SetMenuEditComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private router: Router,
     private ls: LocalStorage,
-    private service: DishMgrService) {
+    private service: DishMgrService,
+    private unitService: UnitService) {
 
   }
 
@@ -70,14 +73,11 @@ export class SetMenuEditComponent implements OnInit {
           this.validateForm = this.fb.group(editInfo);
 
           this.selectedOption = parseInt(data.CompanyId);
-          let menuIds: any[] = data.MenuId.split(',');
-          for (var index = 0; index < menuIds.length; index++) {
-            menuIds[index] = parseInt(menuIds[index]);
-          }
-          this.selectedOptionDish = menuIds;
-          
+       
+          this.selectedOptionDish =this.unitService.arrayChangeToInt(data.MenuId);
+          this.selectedOptionTypeId=this.unitService.arrayChangeToInt(data.TypeId);
+
           this.imgUrl = data.MenuImage;
-          console.log(this.validateForm.value);
         }
       });
     }
@@ -110,8 +110,7 @@ export class SetMenuEditComponent implements OnInit {
     this.service.editSetMenu(params, this.file).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
-          timer: 1000,
+          icon: `success`, timer: 1000,
         });
         this.router.navigateByUrl('/dishMgr/setMenuList');
       }

@@ -1,29 +1,28 @@
 <form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
-  
-    <div nz-form-item nz-row>
-      <div nz-form-label nz-col [nzSpan]="6">
-        <label nz-form-item-required>职位</label>
-      </div>
-      <div nz-form-control nz-col [nzSpan]="14">
-        <nz-input formControlName="RoleName" [nzSize]="'large'">
-        </nz-input>
-      </div>
+
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label>职位</label>
     </div>
-   
-    <div nz-form-item nz-row>
-      <div nz-form-label nz-col [nzSpan]="6">
-        <label>对应权限</label>
-      </div>
-      <div nz-form-control nz-col [nzSpan]="14">
-        <nz-select formControlName="JuIds" [nzSize]="'large'" [nzMode]="'multiple'">
-          <nz-option *ngFor="let item of _jursList" [nzLabel]="item.JName" [nzValue]="item.Id"></nz-option>
-        </nz-select>
-      </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <span nz-form-text>{{validateForm.value.RoleName}}</span>
     </div>
-    <div nz-form-item nz-row>
-      <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
-        <button nz-button [nzType]="'primary'" (click)="submit()" [nzSize]="'large'">提交</button>
-        <button nz-button [nzSize]="'large'" (click)="cancel()">取消</button>
-      </div>
+  </div>
+
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label>对应权限</label>
     </div>
-  </form>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-select formControlName="JuIds" [(ngModel)]="selectedOption" [nzSize]="'large'" [nzMode]="'multiple'">
+        <nz-option *ngFor="let item of _jursList" [nzLabel]="item.JName" [nzValue]="item.Id"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" (click)="submit()" [nzSize]="'large'">提交</button>
+      <button nz-button [nzSize]="'large'" (click)="cancel()">取消</button>
+    </div>
+  </div>
+</form>

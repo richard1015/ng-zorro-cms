@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert';
 import { ShopMgrService, JursByIdParams, EditJursByIdParams } from '../../shopMgr.service';
+import { UnitService } from '../../../../SERVICE/unit.service';
 @Component({
   selector: 'app-authEdit',
   templateUrl: './authEdit.component.html',
@@ -11,6 +12,9 @@ import { ShopMgrService, JursByIdParams, EditJursByIdParams } from '../../shopMg
 export class AuthEditComponent implements OnInit {
 
   validateForm: FormGroup;
+
+  selectedOption;
+
   //权限列表
   _jursList = [];
 
@@ -18,6 +22,7 @@ export class AuthEditComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private router: Router,
     private service: ShopMgrService,
+    private unitService:UnitService
   ) { }
 
   ngOnInit() {
@@ -38,7 +43,8 @@ export class AuthEditComponent implements OnInit {
 
           this.validateForm = this.fb.group(data);
 
-          console.log(this.validateForm.value);
+          this.selectedOption = this.unitService.arrayChangeToInt(data.JuIds);
+
         }
       });
     }
@@ -61,15 +67,14 @@ export class AuthEditComponent implements OnInit {
         params[key] = _data;
       }
     }
-    let paramstrue: EditJursByIdParams=new EditJursByIdParams();
-    paramstrue.JurisID=params.JuIds;
-    paramstrue.RoleID=params.Id;
+    let paramstrue: EditJursByIdParams = new EditJursByIdParams();
+    paramstrue.JurisID = params.JuIds;
+    paramstrue.RoleID = params.Id;
 
     this.service.editJurs(paramstrue).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
-          timer: 1000,
+          icon: `success`, timer: 1000,
         });
         this.router.navigateByUrl('/shopMgr/auth');
       }
@@ -77,6 +82,6 @@ export class AuthEditComponent implements OnInit {
 
   }
   cancel() {
-    window.history.back();
+    this.router.navigateByUrl('/shopMgr/auth');
   }
 }

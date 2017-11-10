@@ -8,79 +8,13 @@
       </div>
     </div>
     <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Bordered</label>
+        <div nz-form-label>
+          <label>固定标题</label>
+        </div>
+        <div nz-form-control>
+          <nz-switch [(ngModel)]="_fixHeader" [ngModelOptions]="{standalone: true}"></nz-switch>
+        </div>
       </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_bordered" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Loading</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_loading" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Pagination</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_pagination" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Title</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_title" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Column Header</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_header" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Footer</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_footer" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Fixed Header</label>
-      </div>
-      <div nz-form-control>
-        <nz-switch [(ngModel)]="_fixHeader" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Size</label>
-      </div>
-      <div nz-form-control>
-        <nz-radio-group [(ngModel)]="_size" [ngModelOptions]="{standalone: true}">
-          <label nz-radio-button [nzValue]="'default'">
-            <span>Default</span>
-          </label>
-          <label nz-radio-button [nzValue]="'middle'">
-            <span>Middle</span>
-          </label>
-          <label nz-radio-button [nzValue]="'small'">
-            <span>Small</span>
-          </label>
-        </nz-radio-group>
-      </div>
-    </div>
   </form>
 </div>
 <nz-spin [nzSpinning]="_deleting" [nzTip]="'正在删除数据...'">
@@ -88,7 +22,6 @@
     (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
     [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
     [nzShowTitle]="_title" [nzSize]="_size">
-    <span nz-table-title>Here is title</span>
     <ng-template #nzFixedHeader [ngIf]="_header&&!_fixHeader">
       <thead nz-thead>
         <tr>
@@ -131,6 +64,5 @@
         </td>
       </tr>
     </tbody>
-    <span nz-table-footer>Here is footer</span>
   </nz-table>
 </nz-spin>

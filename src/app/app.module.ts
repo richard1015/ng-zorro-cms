@@ -14,6 +14,7 @@ import { ApiService } from './SERVICE/api.service';
 import { WebSocketService } from './SERVICE/webSocket.service';
 import { LocalStorage } from './SERVICE/local.storage';
 import { OpenShopComponent } from './openShop/openShop.component';
+import { AppService } from './app.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { OpenShopComponent } from './openShop/openShop.component';
     UploadService,
     ApiService,
     WebSocketService,
+    AppService,
     LocalStorage,
     {
       provide: LocationStrategy,

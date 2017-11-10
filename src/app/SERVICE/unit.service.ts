@@ -5,6 +5,16 @@ export class UnitService {
 
     constructor() { }
 
+    // string 转 数组  且 string 转int
+    arrayChangeToInt(ids: string) {
+        let arrayIds: any[] = ids.split(',');
+        for (var index = 0; index < arrayIds.length; index++) {
+            arrayIds[index] = parseInt(arrayIds[index]);
+        }
+        return arrayIds;
+    }
+
+
     /**
          * range参数支持正负数，里面也加了判断;type【为可选参数】有两种，一个是字符串one，一个是more；前者返回一个指定的日期；后者返回一个排序好的范围
          * http://blog.csdn.net/crper/article/details/55194334

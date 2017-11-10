@@ -74,7 +74,7 @@ export class UnitListComponent implements OnInit {
                                   this.search(true);
                               }
                               swal(res.Msg, {
-                                  icon: `success`,
+                                  icon: `success`, timer: 1000,
                               });
                           }
                       });

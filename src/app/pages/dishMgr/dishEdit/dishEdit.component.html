@@ -66,7 +66,7 @@
       <label nz-form-item-required>菜品类型</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
-      <nz-select formControlName="TypeId" [nzSize]="'large'" [nzMode]="'multiple'">
+      <nz-select formControlName="TypeId" [nzSize]="'large'"  [(ngModel)]="selectedOptionTypeId"  [nzMode]="'multiple'">
         <nz-option *ngFor="let item of _typeList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
       </nz-select>
     </div>
@@ -76,7 +76,7 @@
       <label nz-form-item-required>对应后厨</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
-      <nz-select formControlName="KitchenId" [nzSize]="'large'" [nzMode]="'multiple'">
+      <nz-select formControlName="KitchenId" [nzSize]="'large'" [(ngModel)]="selectedOptionKitchenId" [nzMode]="'multiple'">
         <nz-option *ngFor="let item of _kitchenList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
       </nz-select>
     </div>
@@ -93,10 +93,10 @@
   </div>
   <div nz-form-item nz-row>
     <div nz-form-label nz-col [nzSpan]="6">
-      <label nz-form-item-required>口味</label>
+      <label>口味</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="14">
-      <nz-select formControlName="FlavorId" [nzSize]="'large'" [nzMode]="'multiple'">
+      <nz-select formControlName="FlavorId" [(ngModel)]="selectedOptionFlavorId" [nzSize]="'large'" [nzMode]="'multiple'">
         <nz-option *ngFor="let item of _flavorList" [nzLabel]="item.SName" [nzValue]="item.Id"></nz-option>
       </nz-select>
     </div>

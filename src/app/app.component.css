@@ -50,3 +50,16 @@
     margin-left: 8px;
     line-height:20px;
 }
+
+
+.boosShopsSet{
+    color: #ffffff;
+    width: 200px;
+    height: 31px;
+    line-height: 31px;
+    color: #ffffff;
+    border-radius: 6px;
+    margin: 16px 28px 16px 0;
+    float: left;
+    text-align: center;
+}

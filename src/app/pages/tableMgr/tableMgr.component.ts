@@ -53,7 +53,7 @@ export class TableMgrComponent implements OnInit, OnDestroy {
     this.service.editTable(params).subscribe((res) => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
+          icon: `success`, timer: 1000,
         });
       }
     });
@@ -70,7 +70,7 @@ export class TableMgrComponent implements OnInit, OnDestroy {
     this._loading = true;
     this.service.getTableList(this.params).subscribe(res => {
       this._loading = false;
-      if (res.State == 0) {
+      if (res.State == 0 && res.Value) {
         this._dataSet = res.Value;
         this._dataSetCount = res.TotalNumber;
       }
@@ -114,7 +114,7 @@ export class TableMgrComponent implements OnInit, OnDestroy {
       if (res.State == 0) {
         this.search(true);
         swal(res.Msg, {
-          icon: `success`,
+          icon: `success`, timer: 1000,
         });
       }
     });
@@ -132,10 +132,10 @@ export class TableMgrComponent implements OnInit, OnDestroy {
           params.DtNumber = text;
           params.DtPeople = 4;
           this.service.editTable(params).subscribe((res) => {
-            if (res.State == 0 && res.Value) {
+            if (res.State == 0) {
               this.search(true);
               swal(res.Msg, {
-                icon: `success`,
+                icon: `success`, timer: 1000,
               });
             }
           });
@@ -169,7 +169,7 @@ export class TableMgrComponent implements OnInit, OnDestroy {
       if (res.State == 0) {
         this.search(true);
         swal(res.Msg, {
-          icon: `success`,
+          icon: `success`, timer: 1000,
         });
       }
     });
@@ -197,7 +197,7 @@ export class TableMgrComponent implements OnInit, OnDestroy {
             if (res.State == 0) {
               this.search(true);
               swal(res.Msg, {
-                icon: `success`,
+                icon: `success`, timer: 1000,
               });
             }
           });

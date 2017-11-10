@@ -9,6 +9,7 @@ import { LocalStorage } from '../../../SERVICE/local.storage';
 import { Bounds, CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { DishMgrService, DishListParams, DelDishParams, UnitListParams, TypeListParams, FlavorListParams, KitchenListParams, EditDishParams } from '../dishMgr.service';
 import swal from 'sweetalert';
+import { UnitService } from '../../../SERVICE/unit.service';
 
 @Component({
   selector: 'app-dishEdit',
@@ -25,7 +26,12 @@ export class DishEditComponent implements OnInit {
   //后厨
   _kitchenList = [];
 
+  // select 选择器默认 选中配置
   selectedOption;
+  selectedOptionTypeId;
+  selectedOptionKitchenId;
+  selectedOptionFlavorId;
+
   imgUrl;
 
   validateForm: FormGroup;
@@ -44,7 +50,8 @@ export class DishEditComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private router: Router,
     private ls: LocalStorage,
-    private service: DishMgrService) {
+    private service: DishMgrService,
+    private unitService: UnitService) {
 
     this.name = 'ng-alain';
     this.cropperSettings = new CropperSettings();
@@ -83,7 +90,7 @@ export class DishEditComponent implements OnInit {
     if (dishbehaviorObj.MenuName) {
       dishbehaviorObj.MenuName = "";
       dishbehaviorObj.MenuPrice = "";
-      dishbehaviorObj.Id=0;
+      dishbehaviorObj.Id = 0;
       this.validateForm = this.fb.group(dishbehaviorObj);
       this.selectedOption = parseInt(dishbehaviorObj.CompanyId);
     } else {
@@ -108,6 +115,11 @@ export class DishEditComponent implements OnInit {
           this.validateForm = this.fb.group(editInfo);
 
           this.selectedOption = parseInt(data.CompanyId);
+
+          this.selectedOptionKitchenId = this.unitService.arrayChangeToInt(data.KitchenId);
+          this.selectedOptionTypeId = this.unitService.arrayChangeToInt(data.TypeId);
+          this.selectedOptionFlavorId = this.unitService.arrayChangeToInt(data.FlavorId);
+
           this.imgUrl = data.MenuImage;
           console.log(this.validateForm.value);
         }
@@ -121,6 +133,7 @@ export class DishEditComponent implements OnInit {
       let _data = params[key];
       if (Array.isArray(_data)) {
         _data = _data.toString();
+        if (_data == "NaN") _data = "";
         params[key] = _data;
       }
     }
@@ -134,8 +147,7 @@ export class DishEditComponent implements OnInit {
     this.service.editDish(params, this.file).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
-          timer: 1000,
+          icon: `success`, timer: 1000,
         });
         this.router.navigateByUrl('/dishMgr');
       }

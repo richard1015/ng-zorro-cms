@@ -10,6 +10,7 @@ import { AuthComponent } from './auth/auth.component';
 import { StaffEditComponent } from './staff/staffEdit/staffEdit.component';
 import { DishMgrService } from '../dishMgr/dishMgr.service';
 import { AuthEditComponent } from './auth/authEdit/authEdit.component';
+import { UnitService } from '../../SERVICE/unit.service';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +25,6 @@ import { AuthEditComponent } from './auth/authEdit/authEdit.component';
     AuthComponent,
     AuthEditComponent
 ],
-  providers:[ShopMgrService,DishMgrService]
+  providers:[ShopMgrService,DishMgrService,UnitService]
 })
 export class ShopMgrModule { }

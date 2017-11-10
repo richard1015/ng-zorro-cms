@@ -26,7 +26,7 @@ export class OpenShopComponent implements OnInit {
     this.editShopInfo(params, this.file).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
+          icon: `success`, timer: 1000,
         });
       }
     });

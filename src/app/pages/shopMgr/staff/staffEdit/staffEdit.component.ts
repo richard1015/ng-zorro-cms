@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import swal from 'sweetalert';
 import { KitchenListParams, DishMgrService } from '../../../dishMgr/dishMgr.service';
+import { UnitService } from '../../../../SERVICE/unit.service';
 @Component({
   selector: 'app-staffEdit',
   templateUrl: './staffEdit.component.html',
@@ -17,6 +18,8 @@ export class StaffEditComponent implements OnInit {
   _authList = [];
 
   selectedOption;
+  selectedOptionKitchenId;
+  kitchenState = false;
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -24,6 +27,7 @@ export class StaffEditComponent implements OnInit {
     private router: Router,
     private service: ShopMgrService,
     private serviceDish: DishMgrService,
+    private unitService: UnitService
   ) { }
 
   ngOnInit() {
@@ -45,13 +49,28 @@ export class StaffEditComponent implements OnInit {
           editInfo.Phone = data.Phone;
           editInfo.Pwd = data.Pwd;
           editInfo.RoleID = data.RoleID;
-
+          editInfo.JurisID = data.JurisID;
           this.validateForm = this.fb.group(editInfo);
 
           this.selectedOption = parseInt(data.RoleID);
-          console.log(this.validateForm.value);
+
+          this.selectedOptionKitchenId = this.unitService.arrayChangeToInt(data.KitchenId);
+
         }
       });
+    }
+  }
+  roleItem;
+  //修改角色
+  changeRole(id) {
+    if (!id) return;
+    this.roleItem = this._authList.find((item) => item.Id == id);
+    console.log(this.roleItem);
+    if (this.roleItem.JurisID.indexOf('6') != -1) {
+      this.kitchenState = true;
+    } else {
+      this.kitchenState = false;
+      this.validateForm.controls.KitchenId.setValue("");
     }
   }
   getKitchenList() {
@@ -85,8 +104,7 @@ export class StaffEditComponent implements OnInit {
     this.service.editStaff(params).subscribe(res => {
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
-          timer: 1000,
+          icon: `success`, timer: 1000,
         });
         this.router.navigateByUrl('/shopMgr/staff');
       }
@@ -94,6 +112,6 @@ export class StaffEditComponent implements OnInit {
 
   }
   cancel() {
-    window.history.back();
+    this.router.navigateByUrl('/shopMgr/staff');
   }
 }

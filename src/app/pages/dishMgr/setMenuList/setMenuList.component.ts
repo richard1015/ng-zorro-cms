@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SetMenuListParams, DishMgrService, DelDishParams } from '../dishMgr.service';
+import { SetMenuListParams, DishMgrService, DelDishParams, MenuInfoListParams } from '../dishMgr.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorage } from '../../../SERVICE/local.storage';
@@ -54,6 +54,11 @@ export class SetMenuListComponent implements OnInit {
       if (res.State == 0 && res.Value) {
         this._dataSet = res.Value;
         this._dataSetCount = res.TotalNumber;
+
+        for (var index = 0; index < this._dataSet.length; index++) {
+          this.showSetMenuDetailed(this._dataSet[index])
+        }
+
       } else {
         this._dataSet = [];
         this._dataSetCount = 0;
@@ -67,14 +72,30 @@ export class SetMenuListComponent implements OnInit {
       this._deleting = false;
       if (res.State == 0) {
         swal(res.Msg, {
-          icon: `success`,
-          timer: 1000,
+          icon: `success`, timer: 1000,
         });
         this._dataSet.splice(idx, 1);
       }
     });
   }
   cancel() {
+
+  }
+  showSetMenuDetailed(item) {
+    item.DishInfo = "加载中……";
+    let params: MenuInfoListParams = new MenuInfoListParams();
+    params.MenuPid = item.Id;
+    this.service.getMenuInfoList(params).subscribe((res) => {
+      if (res.State == 0 && res.Value) {
+        let arrayMenuName = [];
+        res.Value.forEach(element => {
+          arrayMenuName.push(element.MenuName);
+        });
+        item.DishInfo = arrayMenuName.join(',');
+      } else {
+        item.DishInfo = "无";
+      }
+    });
   }
 
 }

@@ -62,7 +62,7 @@ export class StaffComponent implements OnInit {
             this._deleting = false;
             if (res.State == 0) {
                 swal(res.Msg, {
-                    icon: `success`,
+                    icon: `success`, timer: 1000,
                 });
                 this._dataSet.splice(idx, 1);
             }

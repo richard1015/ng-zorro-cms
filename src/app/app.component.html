@@ -2,7 +2,14 @@
   <nz-header>
 
     <div class="logo">掌上飞科技有限公司</div>
-    <div class="login">
+    <div class="boosShopsSet" *ngIf="isBoss">
+      <label>当前门店设置:</label>
+      <nz-select style="width: 120px;" [(ngModel)]="selectedOption" (ngModelChange)="currentShopChange($event)">
+        <nz-option *ngFor="let option of boosShopsOptions" [nzLabel]="option.ShopName" [nzValue]="option.Id">
+        </nz-option>
+      </nz-select>
+    </div>
+    <div class="login" *ngIf="!userInfo">
       <form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="_submitForm()">
         <div nz-form-item>
           <div nz-form-control [nzValidateStatus]="validateForm.controls.Phone">
@@ -40,26 +47,26 @@
   <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzWidth]="200" style="background:#fff">
       <ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" style="height:100%">
-        <!-- <nz-dropdown class="user">
+        <nz-dropdown class="user" *ngIf="userInfo">
           <div nz-dropdown class="userInfo">
             <nz-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
             <div class="info">
-              <strong>admin</strong>
-              <p>15010156268</p>
+              <strong>你好</strong>
+              <p>{{userInfo.Phone}}</p>
             </div>
           </div>
           <ul nz-menu>
             <li nz-menu-item>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">个人资料</a>
+              <a [routerLink]="['/shopMgr']">餐厅资料</a>
             </li>
-            <li nz-menu-item>
+            <!-- <li nz-menu-item>
               <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">修改密码</a>
-            </li>
+            </li> -->
             <li nz-menu-item>
-              <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">退出</a>
+              <a (click)="loginOut()">退出</a>
             </li>
           </ul>
-        </nz-dropdown> -->
+        </nz-dropdown>
         <li nz-submenu>
           <span title>
             <i class="anticon anticon-notification"></i>餐厅信息</span>
@@ -99,7 +106,7 @@
       <nz-content style="background:#fff; padding: 10px; min-height: 280px;overflow: auto;">
         <router-outlet></router-outlet>
       </nz-content>
-      <nz-footer style="text-align: center;">ng-zorro-cms ©2017 Implement By zhuzhida</nz-footer>
+      <nz-footer style="text-align: center;">ng-zorro-cms ©2017 Implement By 掌上飞科技有限公司</nz-footer>
     </nz-layout>
   </nz-layout>
 </nz-layout>

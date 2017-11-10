@@ -61,6 +61,10 @@ export class DishMgrService {
     public searchDishByName(params: DishByNameParams) {
         return this.api.Post(params, "BGetMenuInfoByName");
     }
+    //根据套餐id 获取 套餐详细内容
+    public getMenuInfoList(params: MenuInfoListParams) {
+        return this.api.Post(params, "BGetMenuInfoList");
+    }
 
 }
 export class DishListParams {
@@ -141,6 +145,11 @@ export class EditSetMenuParams {
 
 export class DishByNameParams {
     MenuName: string = "";
+}
+export class MenuInfoListParams {
+    MenuPid: number = 0;
+    PageIndex: number = 1;
+    PageSize: number = 9999;
 }
 
 

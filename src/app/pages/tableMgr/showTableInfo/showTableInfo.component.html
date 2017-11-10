@@ -2,28 +2,10 @@
   <form nz-form [nzLayout]="'inline'">
     <div nz-row nz-form-item>
       <div nz-form-label>
-        <label>Fixed Header</label>
+        <label>固定标题</label>
       </div>
       <div nz-form-control>
         <nz-switch [(ngModel)]="_fixHeader" [ngModelOptions]="{standalone: true}"></nz-switch>
-      </div>
-    </div>
-    <div nz-row nz-form-item>
-      <div nz-form-label>
-        <label>Size</label>
-      </div>
-      <div nz-form-control>
-        <nz-radio-group [(ngModel)]="_size" [ngModelOptions]="{standalone: true}">
-          <label nz-radio-button [nzValue]="'default'">
-            <span>Default</span>
-          </label>
-          <label nz-radio-button [nzValue]="'middle'">
-            <span>Middle</span>
-          </label>
-          <label nz-radio-button [nzValue]="'small'">
-            <span>Small</span>
-          </label>
-        </nz-radio-group>
       </div>
     </div>
 
@@ -46,13 +28,13 @@
     </div>
     <div nz-row nz-form-item>
       <div nz-form-control>
-          <button nz-button [nzType]="'primary'" (click)="search(true)" [nzLoading]="_loading">查询</button>
+        <button nz-button [nzType]="'primary'" (click)="search(true)" [nzLoading]="_loading">查询</button>
       </div>
     </div>
 
     <div nz-row nz-form-item>
       <div nz-form-control>
-          <button nz-button (click)="clear()" [disabled]="_loading">清除</button>
+        <button nz-button (click)="clear()" [disabled]="_loading">清除</button>
       </div>
     </div>
 
@@ -64,7 +46,6 @@
     (nzPageIndexChange)="search()" (nzPageSizeChange)="search(true)" [nzTotal]="_dataSetCount" [nzShowTotal]="true" [nzShowQuickJumper]="true"
     [nzShowSizeChanger]="true" [nzBordered]="_bordered" [nzLoading]="_loading" [nzIsPagination]="_pagination" [nzShowFooter]="_footer"
     [nzShowTitle]="_title" [nzSize]="_size">
-    <span nz-table-title>Here is title</span>
     <ng-template #nzFixedHeader [ngIf]="_header&&!_fixHeader">
       <thead nz-thead>
         <tr>
@@ -110,6 +91,5 @@
         </ng-template>
       </ng-template>
     </tbody>
-    <span nz-table-footer>Here is footer</span>
   </nz-table>
 </nz-spin>

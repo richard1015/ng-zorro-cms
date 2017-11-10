@@ -83,6 +83,7 @@ export class EditStaffParams {
     Pwd: string = "";
     RoleID: string = "";
     KitchenId: string = "";
+    JurisID:string="";
 }
 export class AddRoleParams {
     RoleName: string;
