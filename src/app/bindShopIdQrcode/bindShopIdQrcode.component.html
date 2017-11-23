@@ -1,0 +1,41 @@
+<form nz-form [nzType]="'horizontal'" [formGroup]="validateForm">
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+
+    </div>
+    <div nz-form-control nz-col [nzSpan]="5">
+      <h1>非管理员请勿使用</h1>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>店铺Id</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="ShopId" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>店铺Id加密值为</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <nz-input formControlName="ShopSign" [nzSize]="'large'">
+      </nz-input>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
+      <label nz-form-item-required>二维码</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <qr-code [value]="validateForm.value.ShopSign" [size]="128"></qr-code>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-control nz-col [nzSpan]="12" [nzOffset]="6">
+      <button nz-button [nzType]="'primary'" (click)="submit()" [nzSize]="'large'">生成二维码</button>
+    </div>
+  </div>
+</form>
