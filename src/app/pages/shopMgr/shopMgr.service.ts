@@ -54,6 +54,10 @@ export class ShopMgrService {
     public editJurs(params: EditJursByIdParams) {
         return this.api.Post(params, "UpdateRoleJuris");
     }
+     //获取商铺二维码加加密值
+     public getShopSign(params) {
+        return this.api.Post(params, "richardSignTemp");
+    }
 }
 
 export class StaffListParams {

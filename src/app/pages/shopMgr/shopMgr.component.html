@@ -9,6 +9,14 @@
   </div>
   <div nz-form-item nz-row>
     <div nz-form-label nz-col [nzSpan]="6">
+      <label>二维码</label>
+    </div>
+    <div nz-form-control nz-col [nzSpan]="14">
+      <qr-code [value]="qrcodeStr" [size]="128"></qr-code>
+    </div>
+  </div>
+  <div nz-form-item nz-row>
+    <div nz-form-label nz-col [nzSpan]="6">
       <label>店铺图片</label>
     </div>
     <div nz-form-control nz-col [nzSpan]="5">

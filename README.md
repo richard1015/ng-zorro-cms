@@ -1,3 +1,21 @@
+#------------------------项目说明-------------------------
+
+#默认打包 (体积会增大)
+ng build 
+#打包指令（压缩包，用户加载更快）
+ng build --prod --no-extract-license
+#项目启动
+npm start 
+#配置自定义端口，和启动代理请求时， 修改package.json中 start 文件
+scripts.start: "ng serve --host 127.0.0.1 --port 4201 --proxy-config proxy.conf.json"
+#自定义代理配置
+根目录 proxy.conf.json 
+
+
+#---------------------------以下为自动生成说明-------------
+
+
+
 # NgZorroCms
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.

@@ -11,6 +11,7 @@ import { StaffEditComponent } from './staff/staffEdit/staffEdit.component';
 import { DishMgrService } from '../dishMgr/dishMgr.service';
 import { AuthEditComponent } from './auth/authEdit/authEdit.component';
 import { UnitService } from '../../SERVICE/unit.service';
+import { QRCodeModule } from 'angular2-qrcode';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +19,7 @@ import { UnitService } from '../../SERVICE/unit.service';
     ReactiveFormsModule,
     NgZorroAntdModule,
     FormsModule,
+    QRCodeModule
   ],
   declarations: [ShopMgrComponent,
     StaffComponent,

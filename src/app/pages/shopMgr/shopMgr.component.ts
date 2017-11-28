@@ -10,8 +10,8 @@ import swal from 'sweetalert';
 export class ShopMgrComponent implements OnInit {
 
   constructor(private service: ShopMgrService, private fb: FormBuilder) { }
-
-  _data: any = {};
+  qrcodeStr="生成中……";
+  _data: any = { Id: 0 };
   file: File[];
   validateForm: FormGroup;
   ngOnInit() {
@@ -20,7 +20,8 @@ export class ShopMgrComponent implements OnInit {
       if (res.State == 0) {
         let data = res.Value[0];
         this._data = res.Value[0];
-
+        this.getShopSign(this._data.Id);
+     
         let editInfo = new EditShopInfoParams();
         editInfo.Tell = data.Tell;
         editInfo.BusinessHours = data.BusinessHours;
@@ -28,6 +29,18 @@ export class ShopMgrComponent implements OnInit {
         editInfo.ShopImg = data.ShopImg;
         editInfo.ShopName = data.ShopName;
         this.validateForm = this.fb.group(editInfo);
+      }
+    });
+  }
+  getShopSign(id) {
+    this.service.getShopSign({
+      ShopId: id
+    }).subscribe(res => {
+      if (res.State == 0) {
+        // swal(res.Msg, {
+        //   icon: `success`, timer: 1000,
+        // });
+        this.qrcodeStr=res.Value;
       }
     });
   }

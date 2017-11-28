@@ -15,13 +15,13 @@ import { WebSocketService } from './SERVICE/webSocket.service';
 import { LocalStorage } from './SERVICE/local.storage';
 import { OpenShopComponent } from './openShop/openShop.component';
 import { AppService } from './app.service';
-import { BindShopIdQrcodeComponent } from './bindShopIdQrcode/bindShopIdQrcode.component';
-import { QRCodeModule } from 'angular2-qrcode';
+// import { BindShopIdQrcodeComponent } from './bindShopIdQrcode/bindShopIdQrcode.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     OpenShopComponent,
-    BindShopIdQrcodeComponent
+    // BindShopIdQrcodeComponent
 ],
   imports: [
     BrowserModule,
@@ -30,8 +30,7 @@ import { QRCodeModule } from 'angular2-qrcode';
     HttpModule,
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot(),
-    AppRoutes,
-    QRCodeModule
+    AppRoutes
   ],
   providers: [
     UploadService,
