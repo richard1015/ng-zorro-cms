@@ -87,12 +87,18 @@ export class DishEditComponent implements OnInit {
     this.getFlavorList();
     this.getKitchenList();
     let dishbehaviorObj = this.ls.getObject("dishbehavior");
+
     if (dishbehaviorObj.MenuName) {
       dishbehaviorObj.MenuName = "";
       dishbehaviorObj.MenuPrice = "";
       dishbehaviorObj.Id = 0;
+      dishbehaviorObj.FlavorId="";
+     
       this.validateForm = this.fb.group(dishbehaviorObj);
       this.selectedOption = parseInt(dishbehaviorObj.CompanyId);
+      this.selectedOptionKitchenId = this.unitService.arrayChangeToInt(dishbehaviorObj.KitchenId);
+      this.selectedOptionTypeId = this.unitService.arrayChangeToInt(dishbehaviorObj.TypeId);
+      this.selectedOptionFlavorId = this.unitService.arrayChangeToInt(dishbehaviorObj.FlavorId);
     } else {
       this.validateForm = this.fb.group(new EditDishParams());
     }
@@ -161,7 +167,7 @@ export class DishEditComponent implements OnInit {
     let params: UnitListParams = new UnitListParams();
     params.PageSize = 9999;
     this.service.getUnitList(params).subscribe(res => {
-      if (res.State == 0) {
+      if (res.State == 0&&res.Value) {
         this._unitList = res.Value;
       }
     });
@@ -170,7 +176,7 @@ export class DishEditComponent implements OnInit {
     let params: TypeListParams = new TypeListParams();
     params.PageSize = 9999;
     this.service.getTypeList(params).subscribe(res => {
-      if (res.State == 0) {
+      if (res.State == 0&&res.Value) {
         this._typeList = res.Value;
       }
     });
@@ -179,7 +185,7 @@ export class DishEditComponent implements OnInit {
     let params: FlavorListParams = new FlavorListParams();
     params.PageSize = 9999;
     this.service.getFlavorList(params).subscribe(res => {
-      if (res.State == 0) {
+      if (res.State == 0&&res.Value) {
         this._flavorList = res.Value;
       }
     });
@@ -188,7 +194,7 @@ export class DishEditComponent implements OnInit {
     let params: KitchenListParams = new KitchenListParams();
     params.PageSize = 9999;
     this.service.getKitchenList(params).subscribe(res => {
-      if (res.State == 0) {
+      if (res.State == 0&&res.Value) {
         this._kitchenList = res.Value;
       }
     });
